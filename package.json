@@ -1,5 +1,8 @@
 {
   "name": "frontend-common-test",
+  "insights": {
+      "appname" : "frontend-common-test"
+  },
   "version": "0.1.0",
   "private": true,
   "scripts": {
