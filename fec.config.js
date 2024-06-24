@@ -9,7 +9,7 @@ module.exports = {
    * If the dash character is present, you will have add a camelCase version of it to the sassPrefix.
    * If it does not contain the dash character, remove this configuration.
    */
-  sassPrefix: '.frontend-starter-app, .frontendStarterApp',
+  sassPrefix: '.frontend-common-test, .frontendStarterApp',
   /**
    * Change to false after your app is registered in configuration files
    */
