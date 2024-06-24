@@ -1,0 +1,37 @@
+---
+apiVersion: v1
+kind: Template
+metadata:
+  name: frontend-common-test
+objects:
+  - apiVersion: cloud.redhat.com/v1alpha1
+    kind: Frontend
+    metadata:
+      name: frontend-common-test
+    spec:
+      API:
+        versions:
+          - v1
+      envName: ${ENV_NAME}
+      title: Starter App
+      deploymentRepo: https://github.com/RedHatInsights/frontend-common-test
+      frontend:
+        paths:
+          - /apps/frontend-common-test
+      image: ${IMAGE}:${IMAGE_TAG}
+
+      module:
+        manifestLocation: '/apps/frontend-common-test/fed-mods.json'
+        modules:
+          - id: 'overview'
+            module: './RootApp'
+            routes:
+              - pathname: /staging/starter
+
+parameters:
+  - name: ENV_NAME
+    required: true
+  - name: IMAGE_TAG
+    required: true
+  - name: IMAGE
+    value: quay.io/cloudservices/frontend-common-test
