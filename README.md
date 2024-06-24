@@ -1,38 +1,57 @@
-a change
+[![Build Status](https://travis-ci.org/RedHatInsights/frontend-starter-app.svg?branch=master)](https://travis-ci.org/RedHatInsights/frontend-starter-app)
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# frontend-starter-app
 
-## Getting Started
 
-First, run the development server:
+React.js starter app for Red Hat Insights products that includes Patternfly 4 and shared Red Hat cloud service frontend components.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Alternative
+
+Before using this template, please check the [create-crc-app](https://github.com/RedHatInsights/frontend-components/blob/master/packages/docs/pages/ui-onboarding/create-crc-app.mdx). It has some extra setup you may like.
+
+## Initial etc/hosts setup
+
+In order to access the https://[env].foo.redhat.com in your browser, you have to add entries to your `/etc/hosts` file. This is a **one-time** setup that has to be done only once (unless you modify hosts) on each devel machine.
+
+Best way is to edit manually `/etc/hosts` on your localhost line:
+
+```
+127.0.0.1 <your-fqdn> localhost prod.foo.redhat.com stage.foo.redhat.com
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Alternatively you can do this by running following command:
+```bash
+npm run patch:hosts
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+If this command throws an error run it as a `sudo`:
+```bash
+sudo npm run patch:hosts
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Getting started
 
-## Learn More
+1. ```npm install```
 
-To learn more about Next.js, take a look at the following resources:
+2. ```npm run start```
+   1. If you are running the [chrome-service-backend](https://github.com/RedHatInsights/chrome-service-backend) locally, set the environment variable `CHROME_SERVICE` to the port that it is listening on (by default `8000`). For example, `CHROME_SERVICE=8000 npm run start`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Open browser in URL listed in the terminal output
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Update `appUrl` string inside `fec.config.js` according to your application URL. [Read more](http://front-end-docs-insights.apps.ocp4.prod.psi.redhat.com/ui-onboarding/fec-binary#TODO:documentalloptions).
 
-## Deploy on Vercel
+### Testing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`npm run verify` will run `npm run lint` (eslint) and `npm test` (Jest)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Deploying
+
+- The starter repo uses Travis to deploy the webpack build to another Github repo defined in `.travis.yml`
+  - That Github repo has the following branches:
+    - `ci-beta` (deployed by pushing to `master` or `main` on this repo)
+    - `ci-stable` (deployed by pushing to `ci-stable` on this repo)
+    - `qa-beta` (deployed by pushing to `qa-beta` on this repo)
+    - `qa-stable` (deployed by pushing to `qa-stable` on this repo)
+    - `prod-beta` (deployed by pushing to `prod-beta` on this repo)
+    - `prod-stable` (deployed by pushing to `prod-stable` on this repo)
+- Travis uploads results to RedHatInsight's [codecov](https://codecov.io) account. To change the account, modify CODECOV_TOKEN on https://travis-ci.com/.
